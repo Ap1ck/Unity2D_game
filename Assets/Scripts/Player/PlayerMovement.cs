@@ -4,73 +4,75 @@ using UnityEngine.UI;
 using UnityEngine;
 using System;
 
-public class PlayerMovement : MonoBehaviour
+namespace Packages
 {
-    [Header("Movement")]
-    [SerializeField] private float _speed = 4;
-    [SerializeField] private float _jumpForce;
-    [SerializeField] private bool _isGrounded = false;
-
-    [Header("Settings")]
-    [SerializeField] private Transform _grourndColliderTransform;
-    [SerializeField] private LayerMask _groundMask;
-    [SerializeField] private AnimationCurve _curve;
-    [SerializeField] private float _jumpOffest;
-    [SerializeField] private Animator _animator;
-
-    private Rigidbody2D _rigidbody;
-
-    private void Awake()
+    public class PlayerMovement : MonoBehaviour
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>();
-    }
+        [Header("Movement")]
+        [SerializeField] private float _speed = 4;
+        [SerializeField] private float _jumpForce;
+        [SerializeField] private bool _isGrounded = false;
 
-    private void Update()
-    {
-        if (_isGrounded)
+        [Header("Settings")]
+        [SerializeField] private Transform _grourndColliderTransform;
+        [SerializeField] private LayerMask _groundMask;
+        [SerializeField] private AnimationCurve _curve;
+        [SerializeField] private float _jumpOffest;
+        [SerializeField] private Animator _animator;
+
+        public static event Action<int> isMove;
+
+        private Rigidbody2D _rigidbody;
+
+        private void Awake()
         {
-            _animator.SetBool("isJumping", false);
-        }
-        else
-        {
-            _animator.SetBool("isJumping", true);
+            _rigidbody = GetComponent<Rigidbody2D>();
+            _animator = GetComponent<Animator>();
         }
 
-    }
-
-    private void FixedUpdate()
-    {
-        Vector3 overlapCirclePosition = _grourndColliderTransform.position;
-        _isGrounded = Physics2D.OverlapCircle(overlapCirclePosition, _jumpOffest, _groundMask);
-    }
-
-    public void Move(float direction, bool isJumpPressed)
-    {
-        if (isJumpPressed)
+        private void Update()
         {
-            Jump();
+            if (_isGrounded)
+            {
+                _animator.SetBool("isJumping", false);
+            }
+            else
+            {
+                _animator.SetBool("isJumping", true);
+            }
         }
 
-        if (Mathf.Abs(direction) > 0.01)
+        private void FixedUpdate()
         {
-            HorizontalMove(direction);
+            Vector3 overlapCirclePosition = _grourndColliderTransform.position;
+            _isGrounded = Physics2D.OverlapCircle(overlapCirclePosition, _jumpOffest, _groundMask);
+        }
+
+        private void Jump()
+        {
+            if (_isGrounded)
+            {
+                isMove?.Invoke(0);
+                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
+            }
+        }
+
+        private void HorizontalMove(float direction)
+        {
+            _rigidbody.velocity = new Vector2(direction * _speed, _rigidbody.velocity.y);
+        }
+
+        public void Move(float direction, bool isJumpPressed)
+        {
+            if (isJumpPressed)
+            {
+                Jump();
+            }
+
+            if (Mathf.Abs(direction) > 0.01)
+            {
+                HorizontalMove(direction);
+            }
         }
     }
-
-    private void Jump()
-    {
-        if (_isGrounded)
-        {
-            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
-        }
-    }
-
-    private void HorizontalMove(float direction)
-    {
-        _rigidbody.velocity = new Vector2(direction * _speed, _rigidbody.velocity.y);
-    }
-
-    
 }
-
