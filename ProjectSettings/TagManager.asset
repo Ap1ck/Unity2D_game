@@ -9,6 +9,8 @@ TagManager:
   - COIN
   - ZoneLose
   - Stopper
+  - Enemy
+  - RangeAttack
   layers:
   - Default
   - TransparentFX

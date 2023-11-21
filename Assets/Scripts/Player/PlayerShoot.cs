@@ -8,7 +8,7 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private float _fireSpeed;
     [SerializeField] private Transform _firePoint;
 
-    private float _shotAnimationTime= 1.15f;
+    private float _shotAnimationTime = 1.15f;
     private bool _canShoot = true;
 
     public static event Action<bool> OnShoot;

@@ -1,12 +1,16 @@
+
+using System.Collections;
 using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
     [SerializeField] private float _damage;
 
+    private Animator _animator;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Damageable"))
+        if (collision.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<PlayerHealthComponent>().TakeDamage(_damage);
         }

@@ -16,6 +16,7 @@ public class PlayerInput : MonoBehaviour
 
     private float _horizontalMovement;
 
+    private bool _canMove = true;
     private bool _facingRight = true;
     private bool _freezRotation = false;
 
@@ -43,20 +44,29 @@ public class PlayerInput : MonoBehaviour
         _horizontalMovement = Input.GetAxis(GlobalStringVariors.Horizontal);
         bool isJumpPressed = Input.GetButtonDown(GlobalStringVariors.Jump);
 
-        if (!_freezRotation)
+        if (_canMove)
         {
-            if (_horizontalMovement > 0 && !_facingRight)
+            if (!_freezRotation)
             {
-                Flip();
+                if (_horizontalMovement > 0 && !_facingRight)
+                {
+                    Flip();
+                }
+                else if (_horizontalMovement < 0 && _facingRight)
+                {
+                    Flip();
+                }
             }
-            else if (_horizontalMovement < 0 && _facingRight)
-            {
-                Flip();
-            }
+
+            _animator.SetFloat("Speed", Mathf.Abs(_horizontalMovement));
+            _playerMovement.Move(_horizontalMovement, isJumpPressed);
         }
 
-        _animator.SetFloat("Speed", Mathf.Abs(_horizontalMovement));
-        _playerMovement.Move(_horizontalMovement, isJumpPressed);
+        if (Input.GetButtonDown("Fire1"))
+        {
+            _canMove = false;
+            StartCoroutine(IcanMove());
+        }
     }
 
     private void Flip()
@@ -74,5 +84,11 @@ public class PlayerInput : MonoBehaviour
     private void DeletedPlayer()
     {
         Destroy(gameObject);
+    }
+
+    private IEnumerator IcanMove()
+    {
+        yield return new WaitForSeconds(1.15f);
+        _canMove = true;
     }
 }
