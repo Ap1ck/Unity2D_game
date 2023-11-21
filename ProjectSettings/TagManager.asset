@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Damageable
+  - Ground
+  - COIN
+  - ZoneLose
+  - Stopper
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Trees
+  - Water
+  - UI
+  - Charecter
+  - Water
+  - Ground
+  - Mob
+  - Items
+  - Background
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Platform
+    uniqueID: 1019335423
+    locked: 0
+  - name: Clouds
+    uniqueID: 3245486107
+    locked: 0
+  - name: Rock
+    uniqueID: 1867231575
+    locked: 0
+  - name: Forest
+    uniqueID: 1479910123
+    locked: 0
+  - name: Trees
+    uniqueID: 2503657945
+    locked: 0
+  - name: OtherObject
+    uniqueID: 2541218103
+    locked: 0
+  - name: Water
+    uniqueID: 4188135661
+    locked: 0
+  - name: Ground
+    uniqueID: 2176961545
+    locked: 0
+  - name: Mob
+    uniqueID: 3876383679
+    locked: 0
+  - name: UI
+    uniqueID: 4078127569
+    locked: 0
+  - name: items
+    uniqueID: 1573191465
+    locked: 0
+  - name: Background1
+    uniqueID: 4294433021
+    locked: 0
+  - name: Background2
+    uniqueID: 2802578921
+    locked: 0
+  - name: Background3
+    uniqueID: 2034652729
+    locked: 0
+  - name: Charecter
+    uniqueID: 1549143225
+    locked: 0
