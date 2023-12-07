@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 using System.Collections;
 
 public class PlayerShoot : MonoBehaviour
@@ -10,8 +9,6 @@ public class PlayerShoot : MonoBehaviour
 
     private float _shotAnimationTime = 1.15f;
     private bool _canShoot = true;
-
-    public static event Action<bool> OnShoot;
 
     private Animator _animator;
 
@@ -26,7 +23,6 @@ public class PlayerShoot : MonoBehaviour
         {
             if (_canShoot)
             {
-                OnShoot?.Invoke(true);
                 StartCoroutine(Shooting());
             }
         }

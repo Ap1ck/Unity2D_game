@@ -42,22 +42,18 @@ public class GameManager : MonoBehaviour
 
     public void PlayMusic(AudioClip musicClip)
     {
-        // Остановка текущей музыки
         StopMusic();
 
-        // Создание и настройка аудиоисточника для воспроизведения музыки
         GameObject audioSourceObj = new GameObject("Music");
         AudioSource audioSource = audioSourceObj.AddComponent<AudioSource>();
         audioSource.clip = musicClip;
         audioSource.loop = true;
 
-        // Воспроизведение музыки
         audioSource.Play();
     }
 
     public void StopMusic()
     {
-        // Остановка текущей музыки, если она есть
         AudioSource audioSource = FindObjectOfType<AudioSource>();
         if (audioSource != null)
         {

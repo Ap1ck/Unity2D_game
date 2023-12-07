@@ -6,6 +6,8 @@ public class PlayerInventory : MonoBehaviour
 {
     [SerializeField] private Text _scoreText;
 
+    public static event Action InInventory;
+
     private int _quantity;
 
     private void OnDisable()
@@ -20,6 +22,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void TakeCoin(int value)
     {
+        InInventory?.Invoke();
         _quantity += value;
         _scoreText.text = _quantity.ToString();
     }

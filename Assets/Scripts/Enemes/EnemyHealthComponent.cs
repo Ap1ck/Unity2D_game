@@ -7,39 +7,35 @@ public class EnemyHealthComponent : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private float _maxHealth;
-    [SerializeField] private HealthBar _healthBar; 
+    [SerializeField] private HealthBar _healthBar;
 
     public static event Action OnTakeDamage;
+    public static event Action OnDied;
 
     private float _currentHealth;
-
-    private bool _isAlive;
 
     private void Start()
     {
         _currentHealth = _maxHealth;
-        _isAlive = true;
         _healthBar.SetHealth(_currentHealth, _maxHealth);
     }
 
     public void TakeDamage(float damage)
     {
-        _currentHealth -= damage;
         StartCoroutine(AnimHit());
+        OnTakeDamage?.Invoke();
+        _currentHealth -= damage;
         _healthBar.SetHealth(_currentHealth, _maxHealth);
         IsALive();
     }
 
     private void IsALive()
     {
-        if (_currentHealth > 0)
-        {
-            _isAlive = true;
-        }
+        if (_currentHealth > 0) { }
         else
         {
             StartCoroutine(AnimDeath());
-            _isAlive = false;
+            OnDied?.Invoke();
         }
     }
 
@@ -52,8 +48,8 @@ public class EnemyHealthComponent : MonoBehaviour
 
     private IEnumerator AnimDeath()
     {
+        _healthBar.gameObject.SetActive(false);
         _animator.SetBool("isDeath", true);
         yield return new WaitForSeconds(1f);
-        Destroy(gameObject);
     }
 }

@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +6,6 @@ public class ResultController : MonoBehaviour
 {
     [SerializeField] private Image _resultImage;
     [SerializeField] private Button _button;
-    [SerializeField] private LayerMask _layerMask;
 
     private SceneController _scene;
 
@@ -18,10 +16,9 @@ public class ResultController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _layerMask = collision.gameObject.layer;
-
-        if (collision)
+        if (collision.gameObject.CompareTag("Player"))
         {
+            AudioManager.Instance.PlaySFX("MissionComplate");
             _resultImage.gameObject.SetActive(true);
         }
 

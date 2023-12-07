@@ -21,8 +21,8 @@ public class CoinController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            AudioManager.Instance.PlaySFX("Coin");
             IsTakeCoin?.Invoke(_coin);
-
             StartCoroutine(DeletedCoin());
         }
     }
@@ -33,5 +33,4 @@ public class CoinController : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         Destroy(gameObject);
     }
-
 }

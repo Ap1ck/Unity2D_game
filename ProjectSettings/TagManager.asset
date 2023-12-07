@@ -11,6 +11,7 @@ TagManager:
   - Stopper
   - Enemy
   - RangeAttack
+  - Bullet
   layers:
   - Default
   - TransparentFX

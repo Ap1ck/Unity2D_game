@@ -11,6 +11,7 @@ public class ZoneManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            AudioManager.Instance.PlaySFX("Lose");
             OnDestroy?.Invoke();
             _loseCanvas.gameObject.SetActive(true);
         }
