@@ -11,6 +11,7 @@ public class PlayerDamage : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<EnemyHealthComponent>().TakeDamage(_damage);
+            Destroy(gameObject);
         }
     }
 

@@ -1,20 +1,55 @@
 
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
-    [SerializeField] Transform _attackPosition;
-    [SerializeField] private float _damage;
-
+    [SerializeField] private PlayerHealthComponent _healhPlayer;
     [SerializeField] private Animator _animator;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    [SerializeField] private LayerMask _playerMask;
+
+    [SerializeField] private Transform _rangeAttack;
+    [SerializeField] private float _sphereRadius;
+    [SerializeField] private float _damage;
+
+    public static event Action<float> OnTakeDamage;
+
+    private void Awake()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        _healhPlayer = GetComponent<PlayerHealthComponent>();
+    }
+
+    private void Update()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(_rangeAttack.position, _sphereRadius);
+
+        foreach (Collider2D collider in colliders)
         {
-            collision.gameObject.GetComponent<PlayerHealthComponent>().TakeDamage(_damage);
+            if (collider.gameObject.CompareTag("Player"))
+            {
+                StartCoroutine(AttackTime());
+            }
         }
+    }
+
+    //public void StartOfAttackAnimation()
+    //{
+    //    StartCoroutine(AttackTime());
+    //}
+
+    private IEnumerator AttackTime()
+    {
+        _animator.SetBool("isAttack", true);
+        yield return new WaitForSeconds(1f);
+        OnTakeDamage?.Invoke(_damage);
+        _animator.SetBool("isAttack", false);
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(_rangeAttack.position, _sphereRadius);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -25,9 +60,11 @@ public class EnemyDamage : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_attackPosition.position, 0.4f);
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<PlayerHealthComponent>().TakeDamage(_damage);
+        }
     }
 }

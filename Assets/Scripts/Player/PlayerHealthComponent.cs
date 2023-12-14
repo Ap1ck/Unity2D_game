@@ -11,6 +11,7 @@ public class PlayerHealthComponent : MonoBehaviour
     [SerializeField] private float _maxHealth;
     [SerializeField] private HealthBar _healthBar;
 
+    public static event Action OnTakeDamage;
     public static event Action OnDied;
 
     private float _currentHealth;
@@ -55,8 +56,19 @@ public class PlayerHealthComponent : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void OnDisable()
+    {
+        AIEnemy.OnTakeDamage -= TakeDamage;
+    }
+
+    private void OnEnable()
+    {
+        AIEnemy.OnTakeDamage += TakeDamage;
+    }
+
     public void TakeDamage(float damage)
     {
+        OnTakeDamage?.Invoke();
         _currentHealth -= damage;
         StartCoroutine(AnimHit());
         _healthBar.SetHealth(_currentHealth, _maxHealth);

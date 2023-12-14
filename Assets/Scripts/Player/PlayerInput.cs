@@ -8,9 +8,6 @@ namespace Packages
     [RequireComponent(typeof(PlayerMovement))]
     public class PlayerInput : MonoBehaviour
     {
-        [SerializeField] private Canvas _loseCanvas;
-        public LayerMask LayerPlayer;
-
         private PlayerMovement _playerMovement;
         private Animator _animator;
         private Rigidbody2D _rigidBody;
