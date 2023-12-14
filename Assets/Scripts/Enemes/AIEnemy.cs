@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyDamage))]
@@ -10,10 +9,12 @@ public class AIEnemy : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Transform[] _pointPatrol;
 
-    [SerializeField] private float _speed;
+    [SerializeField] private float _speed = 0.5f;
     [SerializeField] private float _timeToRevert;
 
     private float _currentTimeToRevert;
+
+    private bool _revertRightOrLeft = true;
 
     private float _currentState = 0;
 
@@ -29,14 +30,13 @@ public class AIEnemy : MonoBehaviour
 
     private void Start()
     {
-        _currentState = ATTACK_STATE;
+        _currentState = WALK_STATE;
         _collider = GetComponent<BoxCollider2D>();
         _rigidBody = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-
         if (_currentTimeToRevert >= _timeToRevert)
         {
             _currentTimeToRevert = 0;
@@ -58,25 +58,36 @@ public class AIEnemy : MonoBehaviour
 
             case REVERT_STATE:
 
-                _spriteRenderer.flipX = !_spriteRenderer.flipX;
+                if (_revertRightOrLeft)
+                {
+                    transform.rotation = Quaternion.Euler(0, 180, 0);
+                }
+                else
+                {
+                    transform.rotation = Quaternion.Euler(0, 0, 0);
+                }
+
+                _revertRightOrLeft = !_revertRightOrLeft;
+
                 _speed *= -1;
+
                 _currentState = WALK_STATE;
                 break;
 
             case ATTACK_STATE:
 
-                StopWalkTime();
+                _currentState = WALK_STATE;
+
                 break;
         }
 
         _animator.SetFloat("Velocity", _rigidBody.velocity.magnitude);
     }
 
-    private void StartFight()
+    private void AttackNow()
     {
         _currentState = ATTACK_STATE;
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -84,20 +95,20 @@ public class AIEnemy : MonoBehaviour
         {
             _currentState = IDLE_STATE;
         }
-        else if (collision.gameObject.CompareTag("Player"))
-        {
-            StartFight();
-        }
     }
 
     private void OnEnable()
     {
-        EnemyHealthComponent.OnDied += RemoveEnemyComponent;
+        EnemyDamage.IsAttack += AttackNow;
+        EnemyHealthComponent.IsDied += RemoveEnemyComponent;
+        EnemyHealthComponent.IsTakeHit += MovingStop;
     }
 
     private void OnDisable()
     {
-        EnemyHealthComponent.OnDied -= RemoveEnemyComponent;
+        EnemyDamage.IsAttack -= AttackNow;
+        EnemyHealthComponent.IsDied -= RemoveEnemyComponent;
+        EnemyHealthComponent.IsTakeHit -= MovingStop;
     }
 
     private void MovingStop()
@@ -117,5 +128,4 @@ public class AIEnemy : MonoBehaviour
         Destroy(_rigidBody);
         Destroy(_collider);
     }
-
 }

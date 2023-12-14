@@ -58,11 +58,13 @@ public class PlayerHealthComponent : MonoBehaviour
 
     private void OnDisable()
     {
+        EnemyDamage.OnTakeDamage -= TakeDamage;
         AIEnemy.OnTakeDamage -= TakeDamage;
     }
 
     private void OnEnable()
     {
+        EnemyDamage.OnTakeDamage += TakeDamage;
         AIEnemy.OnTakeDamage += TakeDamage;
     }
 

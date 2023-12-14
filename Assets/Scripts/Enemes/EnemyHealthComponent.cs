@@ -9,7 +9,8 @@ public class EnemyHealthComponent : MonoBehaviour
     [SerializeField] private float _maxHealth;
     [SerializeField] private HealthBar _healthBar;
 
-    public static event Action OnDied;
+    public static event Action IsTakeHit;
+    public static event Action IsDied;
 
     private float _currentHealth;
 
@@ -19,18 +20,9 @@ public class EnemyHealthComponent : MonoBehaviour
         _healthBar.SetHealth(_currentHealth, _maxHealth);
     }
 
-    private void OnDisable()
-    {
-        EnemyDamage.OnTakeDamage -= TakeDamage;
-    }
-
-    private void OnEnable()
-    {
-        EnemyDamage.OnTakeDamage += TakeDamage;
-    }
-
     public void TakeDamage(float damage)
     {
+        IsTakeHit?.Invoke();
         StartCoroutine(AnimHit());
         _currentHealth -= damage;
         _healthBar.SetHealth(_currentHealth, _maxHealth);
@@ -43,7 +35,7 @@ public class EnemyHealthComponent : MonoBehaviour
         else
         {
             StartCoroutine(AnimDeath());
-            OnDied?.Invoke();
+            IsDied?.Invoke();
         }
     }
 
@@ -51,6 +43,7 @@ public class EnemyHealthComponent : MonoBehaviour
     {
         _animator.SetBool("isHit", true);
         yield return new WaitForSeconds(0.25f);
+        IsTakeHit?.Invoke();
         _animator.SetBool("isHit", false);
     }
 
