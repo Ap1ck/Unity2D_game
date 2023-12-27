@@ -5,9 +5,7 @@ using UnityEngine;
 public class EnemyDamage : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-
     [SerializeField] private Transform _rangeAttack;
-    [SerializeField] private float _sphereRadius;
     [SerializeField] private float _damage;
 
     public static event Action IsAttack;
@@ -18,7 +16,6 @@ public class EnemyDamage : MonoBehaviour
     {
         OnTakeDamage?.Invoke(_damage);
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -14,11 +14,11 @@ GameObject:
   - component: {fileID: 5240777272405862670}
   - component: {fileID: 5240777272405862671}
   - component: {fileID: 5240777272405862656}
-  - component: {fileID: 5240777272405862657}
   - component: {fileID: 5240777272405862669}
+  - component: {fileID: 654995110}
   m_Layer: 9
   m_Name: Goblin
-  m_TagString: Damageable
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,15 +30,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5240777272405862661}
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 22.841, y: 1.276, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2290157308741856416}
+  - {fileID: 6901431034562866085}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5240777272405862659
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -82,7 +83,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 4723107735738678597, guid: c1cdd26cc09ad224884556bc4d8296ae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.33, y: 0.36}
@@ -170,23 +171,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60a126be8609f2e408804970ff7e7776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 5
---- !u!114 &5240777272405862657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5240777272405862661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcd79911f2dd2ea4595df35aa4954992, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   _animator: {fileID: 5240777272405862660}
-  _spriteRenderer: {fileID: 5240777272405862659}
-  _speed: 0.7
-  _timeToRevert: 3
+  _rangeAttack: {fileID: 6901431034562866085}
+  _damage: 5
 --- !u!114 &5240777272405862669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,9 +186,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5eaf384847add04a803d6b399e19361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthBar: {fileID: 8529383822770142544}
   _animator: {fileID: 5240777272405862660}
   _maxHealth: 50
+  _healthBar: {fileID: 8529383822770142544}
+--- !u!114 &654995110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5240777272405862661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 207d28f53ced29e4c8707ff2417d4b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 5240777272405862660}
+  _pointPatrol:
+  - {fileID: 0}
+  - {fileID: 0}
+  _speed: 0.5
+  _timeToRevert: 1.5
+  _enemyHealth: {fileID: 5240777272405862669}
+--- !u!1 &8858543808474198269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6901431034562866085}
+  - component: {fileID: 7847366823859021621}
+  m_Layer: 0
+  m_Name: RangeAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6901431034562866085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8858543808474198269}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.228, y: 0.18000007, z: 0}
+  m_LocalScale: {x: 1.4285715, y: 1.4285715, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5240777272405862658}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &7847366823859021621
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8858543808474198269}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1
 --- !u!1001 &5240777272615260200
 PrefabInstance:
   m_ObjectHideFlags: 0

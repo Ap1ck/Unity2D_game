@@ -9,8 +9,8 @@ public class EnemyHealthComponent : MonoBehaviour
     [SerializeField] private float _maxHealth;
     [SerializeField] private HealthBar _healthBar;
 
-    public static event Action IsTakeHit;
-    public static event Action IsDied;
+    public event Action IsTakeHit;
+    public event Action IsDeath;
 
     private float _currentHealth;
 
@@ -26,6 +26,7 @@ public class EnemyHealthComponent : MonoBehaviour
         StartCoroutine(AnimHit());
         _currentHealth -= damage;
         _healthBar.SetHealth(_currentHealth, _maxHealth);
+        AudioManager.Instance.PlaySFX("TakeHitEnemy");
         IsALive();
     }
 
@@ -34,8 +35,8 @@ public class EnemyHealthComponent : MonoBehaviour
         if (_currentHealth > 0) { }
         else
         {
+            IsDeath?.Invoke();
             StartCoroutine(AnimDeath());
-            IsDied?.Invoke();
         }
     }
 
@@ -51,6 +52,9 @@ public class EnemyHealthComponent : MonoBehaviour
     {
         _healthBar.gameObject.SetActive(false);
         _animator.SetBool("isDeath", true);
+
         yield return new WaitForSeconds(1f);
+
+        Destroy(gameObject);
     }
 }

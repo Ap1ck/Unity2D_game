@@ -5,12 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyDamage))]
 public class AIEnemy : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField] private Animator _animator;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Transform[] _pointPatrol;
 
     [SerializeField] private float _speed = 0.5f;
     [SerializeField] private float _timeToRevert;
+
+    [SerializeField] private EnemyHealthComponent _enemyHealth;
 
     private float _currentTimeToRevert;
 
@@ -23,15 +25,12 @@ public class AIEnemy : MonoBehaviour
     private const float REVERT_STATE = 3;
     private const float ATTACK_STATE = 4;
 
-    public static event Action<float> OnTakeDamage;
-
     private Rigidbody2D _rigidBody;
-    private BoxCollider2D _collider;
 
     private void Start()
     {
+        _enemyHealth = GetComponent<EnemyHealthComponent>();
         _currentState = WALK_STATE;
-        _collider = GetComponent<BoxCollider2D>();
         _rigidBody = GetComponent<Rigidbody2D>();
     }
 
@@ -75,9 +74,6 @@ public class AIEnemy : MonoBehaviour
                 break;
 
             case ATTACK_STATE:
-
-                _currentState = WALK_STATE;
-
                 break;
         }
 
@@ -95,20 +91,37 @@ public class AIEnemy : MonoBehaviour
         {
             _currentState = IDLE_STATE;
         }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            _currentState = ATTACK_STATE;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            _currentState = WALK_STATE;
+        }
     }
 
     private void OnEnable()
     {
         EnemyDamage.IsAttack += AttackNow;
-        EnemyHealthComponent.IsDied += RemoveEnemyComponent;
-        EnemyHealthComponent.IsTakeHit += MovingStop;
+        _enemyHealth.IsTakeHit += MovingStop;
+        _enemyHealth.IsDeath += EndMoving;
     }
 
     private void OnDisable()
     {
         EnemyDamage.IsAttack -= AttackNow;
-        EnemyHealthComponent.IsDied -= RemoveEnemyComponent;
-        EnemyHealthComponent.IsTakeHit -= MovingStop;
+        _enemyHealth.IsTakeHit -= MovingStop;
+        _enemyHealth.IsDeath -= EndMoving;
+    }
+
+    private void EndMoving()
+    {
+        _speed = 0;
     }
 
     private void MovingStop()
@@ -121,11 +134,5 @@ public class AIEnemy : MonoBehaviour
         _currentState = IDLE_STATE;
         yield return new WaitForSeconds(0.7f);
         _currentState = WALK_STATE;
-    }
-
-    private void RemoveEnemyComponent()
-    {
-        Destroy(_rigidBody);
-        Destroy(_collider);
     }
 }

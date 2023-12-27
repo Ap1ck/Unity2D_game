@@ -27,13 +27,13 @@ namespace Packages
 
         private void OnEnable()
         {
-            PlayerHealthComponent.OnDied += ForbidToMove;
+            PlayerHealthComponent.IsDie += ForbidToMove;
             ZoneManager.OnDestroy += DeletedPlayer;
         }
 
         private void OnDisable()
         {
-            PlayerHealthComponent.OnDied -= ForbidToMove;
+            PlayerHealthComponent.IsDie -= ForbidToMove;
             ZoneManager.OnDestroy -= DeletedPlayer;
         }
 

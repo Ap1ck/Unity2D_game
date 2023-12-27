@@ -11,6 +11,14 @@ public class SceneController : MonoBehaviour
 
     private int _indexScene = 1;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _imagesMenu.gameObject.SetActive(true);
+        }
+    }
+
     public void LoadNextScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + _indexScene);
@@ -30,10 +38,4 @@ public class SceneController : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
-
-    public void OpenMenu()
-    {
-        _imagesMenu.gameObject.SetActive(true);
-    }
-
 }

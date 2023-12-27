@@ -6,15 +6,18 @@ using System;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerHealthComponent : MonoBehaviour
 {
+    [Header("Components")]
     [SerializeField] private Animator _animator;
     [SerializeField] private Canvas _loseCanvas;
-    [SerializeField] private float _maxHealth;
     [SerializeField] private HealthBar _healthBar;
 
-    public static event Action OnTakeDamage;
-    public static event Action OnDied;
-
+    [Header("Health")]
+    [SerializeField] private float _maxHealth;
     private float _currentHealth;
+
+    public static event Action OnTakeDamage;
+    public static event Action IsDie;
+
     private float _timeOfDeathAnimation = 1.12f;
     private bool _isAlive;
 
@@ -43,13 +46,14 @@ public class PlayerHealthComponent : MonoBehaviour
     private IEnumerator AnimHit()
     {
         _animator.SetBool("isHit", true);
+        AudioManager.Instance.PlaySFX("TakeHitPlayer");
         yield return new WaitForSeconds(0.25f);
         _animator.SetBool("isHit", false);
     }
 
     private IEnumerator AnimDeath()
     {
-        OnDied?.Invoke();
+        IsDie?.Invoke();
         _animator.SetBool("isDeath", true);
         yield return new WaitForSeconds(_timeOfDeathAnimation);
         _loseCanvas.gameObject.SetActive(true);
@@ -59,13 +63,11 @@ public class PlayerHealthComponent : MonoBehaviour
     private void OnDisable()
     {
         EnemyDamage.OnTakeDamage -= TakeDamage;
-        AIEnemy.OnTakeDamage -= TakeDamage;
     }
 
     private void OnEnable()
     {
         EnemyDamage.OnTakeDamage += TakeDamage;
-        AIEnemy.OnTakeDamage += TakeDamage;
     }
 
     public void TakeDamage(float damage)
