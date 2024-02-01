@@ -72,10 +72,10 @@ public class PlayerHealthComponent : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        OnTakeDamage?.Invoke();
         _currentHealth -= damage;
         StartCoroutine(AnimHit());
         _healthBar.SetHealth(_currentHealth, _maxHealth);
+        OnTakeDamage?.Invoke();
         IsAlive();
     }
 }
