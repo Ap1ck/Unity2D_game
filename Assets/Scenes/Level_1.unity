@@ -2669,6 +2669,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1917689659}
     m_Modifications:
+    - target: {fileID: 1380267840, guid: b8297d3c191a728499aa6fe8ef14dfd2, type: 3}
+      propertyPath: Shoot
+      value: 
+      objectReference: {fileID: 5405587578509499131}
+    - target: {fileID: 1380267840, guid: b8297d3c191a728499aa6fe8ef14dfd2, type: 3}
+      propertyPath: PlayerMove
+      value: 
+      objectReference: {fileID: 5405587578509499132}
+    - target: {fileID: 1380267840, guid: b8297d3c191a728499aa6fe8ef14dfd2, type: 3}
+      propertyPath: _imagesMenu
+      value: 
+      objectReference: {fileID: 166514696}
     - target: {fileID: 6263229710896825857, guid: b8297d3c191a728499aa6fe8ef14dfd2, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2766,13 +2778,13 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &166514696 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1240745503, guid: b8297d3c191a728499aa6fe8ef14dfd2, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6263229710172367948, guid: b8297d3c191a728499aa6fe8ef14dfd2, type: 3}
   m_PrefabInstance: {fileID: 166514694}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7092bc0bb3bd66f448c40db54266f822, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &185188835
@@ -36647,6 +36659,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5405587579120397051, guid: 7c25eb54d5c929041b7915069d980086, type: 3}
   m_PrefabInstance: {fileID: 5405587578509499129}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5405587578509499131 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5405587579120397040, guid: 7c25eb54d5c929041b7915069d980086, type: 3}
+  m_PrefabInstance: {fileID: 5405587578509499129}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727091478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef15703e6420b540b9b6629ea6cc515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5405587578509499132 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5405587579120397054, guid: 7c25eb54d5c929041b7915069d980086, type: 3}
+  m_PrefabInstance: {fileID: 5405587578509499129}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 727091478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: def5190a7ac5dc24b852581f8f5ad73b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &5405587578509499139
 AudioSource:
   m_ObjectHideFlags: 0
@@ -36990,7 +37024,7 @@ PrefabInstance:
     - target: {fileID: 8357094956660201021, guid: b014158105a37db4c81b7847374d750b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 166514696}
+      objectReference: {fileID: 0}
     - target: {fileID: 8357094956660201021, guid: b014158105a37db4c81b7847374d750b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: LoadNextScene

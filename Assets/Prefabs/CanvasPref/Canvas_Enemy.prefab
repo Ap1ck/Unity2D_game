@@ -299,7 +299,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: -216839727
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -335,3 +335,4 @@ MonoBehaviour:
   _slider: {fileID: 6301308671515227449}
   _low: {r: 0.8, g: 0.10049807, b: 0.054901935, a: 1}
   _hight: {r: 1, g: 1, b: 1, a: 1}
+  _target: {fileID: 0}

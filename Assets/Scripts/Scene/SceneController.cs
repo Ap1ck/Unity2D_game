@@ -1,15 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System;
 
 public class SceneController : MonoBehaviour
 {
     [SerializeField] private Image _imagesMenu;
 
+    public PlayerMovement PlayerMove;
+    public PlayerShoot Shoot;
+
     private int _indexScene = 1;
+
+    private void Start()
+    {
+        PlayerMove = GetComponent<PlayerMovement>();
+        Shoot = GetComponent<PlayerShoot>();
+    }
 
     private void Update()
     {
